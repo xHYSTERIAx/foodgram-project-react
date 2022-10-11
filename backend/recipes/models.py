@@ -8,6 +8,7 @@ User = get_user_model()
 
 
 class Ingredient(models.Model):
+    """Модель ингредиента"""
     name = models.CharField(
         verbose_name='Ингридиент',
         max_length=200
@@ -27,6 +28,7 @@ class Ingredient(models.Model):
 
 
 class Tag(models.Model):
+    """Модель тега"""
     name = models.CharField(
         verbose_name='Тег',
         max_length=50,
@@ -59,6 +61,7 @@ class Tag(models.Model):
 
 
 class Recipe(models.Model):
+    """Модель рецепта"""
     name = models.CharField(
         verbose_name='Название',
         max_length=200
@@ -71,8 +74,7 @@ class Recipe(models.Model):
         null=True
     )
     text = models.TextField(
-        verbose_name='Описание рецепта',
-        max_length=5000
+        verbose_name='Описание рецепта'
     )
     image = models.ImageField(
         verbose_name='Изображение рецепта',
@@ -81,8 +83,8 @@ class Recipe(models.Model):
     cooking_time = models.PositiveSmallIntegerField(
         verbose_name='Время приготовления',
         validators=[
-            MinValueValidator(1, message='Минимальное значение 1!'),
-            MaxValueValidator(600, message='Максимальное значение 10000!')
+            MinValueValidator(1, message='Минимальное значение 1'),
+            MaxValueValidator(600, message='Максимальное значение 600')
         ]
     )
     ingredients = models.ManyToManyField(
@@ -107,6 +109,7 @@ class Recipe(models.Model):
 
 
 class IngredientInRecipe(models.Model):
+    """Модель ингредиентов в рецепте"""
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
@@ -121,8 +124,8 @@ class IngredientInRecipe(models.Model):
     amount = models.PositiveSmallIntegerField(
         verbose_name='Количество',
         validators=[
-            MinValueValidator(1, message='Минимальное количество 1!'),
-            MaxValueValidator(10000, message='Максимальное значение 10000!')
+            MinValueValidator(1, message='Минимальное количество 1'),
+            MaxValueValidator(100, message='Максимальное значение 100')
         ]
     )
 
@@ -138,6 +141,7 @@ class IngredientInRecipe(models.Model):
 
 
 class Favourite(models.Model):
+    """Модель избранного"""
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -164,6 +168,7 @@ class Favourite(models.Model):
 
 
 class ShoppingCart(models.Model):
+    """Модель списка покупок"""
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

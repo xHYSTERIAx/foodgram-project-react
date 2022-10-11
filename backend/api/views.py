@@ -18,6 +18,7 @@ from .serializers import (IngredientSerializer, RecipeReadSerializer,
 
 
 class RecipeViewSet(ModelViewSet):
+    """Вьюсет для модели рецепта"""
     queryset = Recipe.objects.all()
     permission_classes = (IsAdminAuthorOrReadOnly,)
     pagination_class = CustomPagination
@@ -38,6 +39,7 @@ class RecipeViewSet(ModelViewSet):
         permission_classes=[IsAuthenticated]
     )
     def favorite(self, request, pk):
+        """Добавление/удаление из избранного"""
         if request.method == 'POST':
             return self.add_to(Favourite, request.user, pk)
         else:
@@ -49,12 +51,14 @@ class RecipeViewSet(ModelViewSet):
         permission_classes=[IsAuthenticated]
     )
     def shopping_cart(self, request, pk):
+        """Добавление/удаление списка покупок"""
         if request.method == 'POST':
             return self.add_to(ShoppingCart, request.user, pk)
         else:
             return self.delete_from(ShoppingCart, request.user, pk)
 
     def add_to(self, model, user, pk):
+        """Добавление рецепта"""
         if model.objects.filter(user=user, recipe__id=pk).exists():
             return Response({'errors': 'Рецепт уже добавлен в список'},
                             status=status.HTTP_400_BAD_REQUEST)
@@ -64,6 +68,7 @@ class RecipeViewSet(ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete_from(self, model, user, pk):
+        """Удаление рецепта"""
         obj = model.objects.filter(user=user, recipe__id=pk)
         if obj.exists():
             obj.delete()
@@ -77,9 +82,10 @@ class RecipeViewSet(ModelViewSet):
         permission_classes=[IsAuthenticated]
     )
     def download_shopping_cart(self, request):
+        """Скачивание списка покупок"""
         user = self.request.user
         shopping_cart = user.cart.all()
-        list = {}
+        ingredients_in_cart = {}
         for item in shopping_cart:
             recipe = item.recipe
             ingredients = IngredientInRecipe.objects.filter(recipe=recipe)
@@ -87,21 +93,21 @@ class RecipeViewSet(ModelViewSet):
                 amount = ingredient.amount
                 name = ingredient.ingredient.name
                 measurement_unit = ingredient.ingredient.measurement_unit
-                if name not in list:
-                    list[name] = {
+                if name not in ingredients_in_cart:
+                    ingredients_in_cart[name] = {
                         'measurement_unit': measurement_unit,
                         'amount': amount
                     }
                 else:
-                    list[name]['amount'] = (
-                        list[name]['amount'] + amount
+                    ingredients_in_cart[name]['amount'] = (
+                        ingredients_in_cart[name]['amount'] + amount
                     )
 
         shopping_list = []
-        for item in list:
+        for item in ingredients_in_cart:
             shopping_list.append(
-                f'{item} - {list[item]["amount"]} '
-                f'{list[item]["measurement_unit"]} \n'
+                f'{item} - {ingredients_in_cart[item]["amount"]} '
+                f'{ingredients_in_cart[item]["measurement_unit"]} \n'
             )
         response = HttpResponse(shopping_list, 'Content-Type: text/plain')
         response['Content-Disposition'] = ('attachment; '
@@ -111,6 +117,7 @@ class RecipeViewSet(ModelViewSet):
 
 
 class IngredientViewSet(ReadOnlyModelViewSet):
+    """Вьюсет для модели ингредиента"""
     queryset = Ingredient.objects.all()
     serializer_class = IngredientSerializer
     permission_classes = (IsAdminOrReadOnly,)
@@ -119,6 +126,7 @@ class IngredientViewSet(ReadOnlyModelViewSet):
 
 
 class TagViewSet(ReadOnlyModelViewSet):
+    """Вьюсет для модели тега"""
     queryset = Tag.objects.all()
     serializer_class = TagSerializer
     permission_classes = (IsAdminOrReadOnly,)
