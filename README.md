@@ -38,6 +38,7 @@ http://51.250.20.230/
 
 - Заполните базу данных содержимым из файла ingredients.json
     "$ sudo docker compose exec backend python manage.py loaddata ingredients.json"
+
 - Проверьте работоспособность приложения, для этого перейдите на страницу:
 
     "http://localhost/admin/"
