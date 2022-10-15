@@ -1,4 +1,4 @@
-![yamdb_workflow](https://github.com/xHYSTERIAx/foodgram-project-react/workflows/foodgram_workflow/badge.svg)
+![Foodgram_workflow](https://github.com/xHYSTERIAx/foodgram-project-react/workflows/main.yml/badge.svg)
 
 
 ## FOODGRAM 
@@ -11,21 +11,35 @@ Foodgram - приложение для публикации рецептов. В
 - Postgres
 - Docker
 - Yandex cloud
+- CI/CD
 
 ## Адрес приложения:
 http://51.250.20.230/
 
-### Запуск проекта:
+### Запуск проекта на сервере:
 - Склонируйте репозитрий на свой компьютер
-- Из папки "infra/" соберите образ при помощи docker-compose
-    "$ docker-compose up -d --build"
+
+- Установите на сервер Docker, Docker Compose
+
+- Скопируйте на сервер файлы docker-compose.yml, nginx.conf из папки infra
+
+- Cоберите образ при помощи docker-compose
+    "$ sudo docker compose up -d "
+
 - Примените миграции
-    "$ docker-compose exec web python manage.py migrate"
+    "$ sudo docker compose exec backend python manage.py makemigrations"
+    "$ sudo docker compose exec backend python manage.py migrate"
+
 - Соберите статику
-    "$ docker-compose exec web python manage.py collectstatic --no-input"
-- Для доступа к админке не забудьте создать суперюзера
-    "$ docker-compose exec web python manage.py createsuperuser"
+    "$ sudo docker compose exec backend python manage.py collectstatic --no-input"
+
+- Cоздайте суперюзера
+    "$ sudo docker compose exec backend python manage.py createsuperuser"
+
+- Заполните базу данных содержимым из файла ingredients.json
+    "$ sudo docker compose exec backend python manage.py loaddata ingredients.json"
 - Проверьте работоспособность приложения, для этого перейдите на страницу:
+
     "http://localhost/admin/"
  
 
