@@ -14,14 +14,25 @@ Foodgram - приложение для публикации рецептов. В
 - CI/CD
 
 ## Адрес приложения:
-http://51.250.20.230/
+http://51.250.20.230/recipes
 
 ### Запуск проекта на сервере:
-- Склонируйте репозитрий на свой компьютер
+- Склонируйте репозиторий на свой компьютер
 
 - Установите на сервер Docker, Docker Compose
 
 - Скопируйте на сервер файлы docker-compose.yml, nginx.conf из папки infra
+
+- Создайте файл .env и заполните его своими данными:
+  " touch .env"
+  "nano .env" 
+ 
+  " DB_ENGINE=django.db.backends.postgresql
+    DB_NAME=postgres
+    POSTGRES_USER=postgres
+    POSTGRES_PASSWORD=postgres
+    DB_HOST=db
+    DB_PORT=5432 "
 
 - Cоберите образ при помощи docker-compose
     "$ sudo docker compose up -d "
@@ -38,9 +49,6 @@ http://51.250.20.230/
 
 - Заполните базу данных содержимым из файла ingredients.json
     "$ sudo docker compose exec backend python manage.py loaddata ingredients.json"
-
-- Проверьте работоспособность приложения, для этого перейдите на страницу:
-    "http://localhost/admin/"
  
 
 
