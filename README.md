@@ -1,4 +1,4 @@
-![Foodgram_workflow](https://github.com/xHYSTERIAx/foodgram-project-react/workflows/main.yml/badge.svg)
+![Foodgram_workflow](https://github.com/xHYSTERIAx/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 
 
 ## FOODGRAM 
@@ -24,31 +24,44 @@ http://51.250.20.230/recipes
 - Скопируйте на сервер файлы docker-compose.yml, nginx.conf из папки infra
 
 - Создайте файл .env и заполните его своими данными:
-  " touch .env"
-  "nano .env" 
- 
-  " DB_ENGINE=django.db.backends.postgresql
-    DB_NAME=postgres
-    POSTGRES_USER=postgres
-    POSTGRES_PASSWORD=postgres
-    DB_HOST=db
-    DB_PORT=5432 "
+```
+touch .env
+nano .env
+```
+```
+DB_ENGINE=django.db.backends.postgresql
+DB_NAME=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+DB_HOST=db
+DB_PORT=5432
+```
 
 - Cоберите образ при помощи docker-compose
-    "$ sudo docker compose up -d "
+```
+sudo docker compose up -d
+```
 
 - Примените миграции
-    "$ sudo docker compose exec backend python manage.py makemigrations"
-    "$ sudo docker compose exec backend python manage.py migrate"
+```
+sudo docker compose exec backend python manage.py makemigrations
+sudo docker compose exec backend python manage.py migrate
+```
 
 - Соберите статику
-    "$ sudo docker compose exec backend python manage.py collectstatic --no-input"
+```
+sudo docker compose exec backend python manage.py collectstatic --noinput
+```
 
 - Cоздайте суперюзера
-    "$ sudo docker compose exec backend python manage.py createsuperuser"
+```
+sudo docker compose exec backend python manage.py createsuperuser
+```
 
 - Заполните базу данных содержимым из файла ingredients.json
-    "$ sudo docker compose exec backend python manage.py loaddata ingredients.json"
+```
+sudo docker compose exec backend python manage.py loaddata ingredients.json
+```
  
 
 
