@@ -159,6 +159,12 @@ class RecipeWriteSerializer(ModelSerializer):
                 raise ValidationError({
                     'ingredients': 'Ингридиенты должны быть уникальными'
                 })
+            try:
+                int(ingredient_item['amount'])
+            except Exception:
+                raise ValidationError({
+                    'amount': 'Количество должно быть числом!'
+                })
             if int(ingredient_item['amount']) <= 0:
                 raise ValidationError({
                     'amount': 'Убедитесь, что количество ингредиентов больше 0'
