@@ -16,6 +16,7 @@ Foodgram - приложение для публикации рецептов. В
 ## Адрес приложения:
 http://51.250.20.230/recipes
 
+
 ### Запуск проекта на сервере:
 - Склонируйте репозиторий на свой компьютер
 
@@ -63,6 +64,8 @@ sudo docker compose exec backend python manage.py createsuperuser
 sudo docker compose exec backend python manage.py loaddata ingredients.json
 ```
  
+
+
 
 
  ## Автор
