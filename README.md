@@ -1,6 +1,7 @@
 ![Foodgram_workflow](https://github.com/xHYSTERIAx/foodgram-project-react/actions/workflows/main.yml/badge.svg)
 
 
+
 ## FOODGRAM 
 Foodgram - приложение для публикации рецептов. В нём можно публиковать рецепты, добавлять чужие рецепты в избранное, подписываться на других авторов. Так же в нём можно создавать список покупок, в котором создается список необходимых продуктов для приготовления выбранного рецепта.
 
@@ -64,9 +65,6 @@ sudo docker compose exec backend python manage.py createsuperuser
 sudo docker compose exec backend python manage.py loaddata ingredients.json
 ```
  
-
-
-
 
  ## Автор
    - Анастасия Жалненкова
